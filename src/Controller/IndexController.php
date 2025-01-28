@@ -18,7 +18,7 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         return $this->render('index/index.html.twig', [
-            'title' => 'Test Data & JS Containers',
+            'title' => 'Embed forms with collections',
         ]);
     }
 
@@ -34,23 +34,21 @@ class IndexController extends AbstractController
     #[Route('/company/{id}', name: 'app_company')]
     public function company(Request $request, EntityManagerInterface $entityManager, Company $company): Response
     {
-        $form = $this->createForm(TeamCompanyType::class,$company);
+        $form = $this->createForm(TeamCompanyType::class, $company);
         $form->handleRequest($request);
-
-        //dd($company);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($company);
 
-            foreach($company->getTeams() as $team) {
+            foreach ($company->getTeams() as $team) {
                 $team->setCompany($company);
                 $entityManager->persist($team);
             }
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_companies', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('index/company.html.twig', [
@@ -59,20 +57,18 @@ class IndexController extends AbstractController
         ]);
     }
 
-    #[Route('/data-list', name: 'app_data_list')]
-    public function dataList(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/form-list', name: 'app_form_list')]
+    public function formList(Request $request, EntityManagerInterface $entityManager): Response
     {
         $company = new Company();
-        $form = $this->createForm(CompanyType::class,$company);
+        $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
-
-        //dd($company);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($company);
 
-            foreach($company->getTeams() as $team) {
+            foreach ($company->getTeams() as $team) {
                 $team->setCompany($company);
                 $entityManager->persist($team);
             }
@@ -82,26 +78,24 @@ class IndexController extends AbstractController
             return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('index/data-list.html.twig', [
-            'title' => 'Data',
+        return $this->render('index/form-list.html.twig', [
+            'title' => 'Form collection - List format',
             'form' => $form,
         ]);
     }
 
-    #[Route('/data-table', name: 'app_data_table')]
-    public function dataTable(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/form-table', name: 'app_form_table')]
+    public function formTable(Request $request, EntityManagerInterface $entityManager): Response
     {
         $company = new Company();
-        $form = $this->createForm(CompanyType::class,$company);
+        $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
-
-        //dd($company);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($company);
 
-            foreach($company->getTeams() as $team) {
+            foreach ($company->getTeams() as $team) {
                 $team->setCompany($company);
                 $entityManager->persist($team);
             }
@@ -111,8 +105,8 @@ class IndexController extends AbstractController
             return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('index/data-table.html.twig', [
-            'title' => 'Data',
+        return $this->render('index/form-table.html.twig', [
+            'title' => 'Form collection - Table format',
             'form' => $form,
         ]);
     }

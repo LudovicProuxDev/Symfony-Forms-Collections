@@ -14,13 +14,12 @@ class TeamCompanyType extends AbstractType
     {
         $builder
             ->add('teams', CollectionType::class, [
-            'entry_type' => TeamType::class,
-            'entry_options' => ['label' => true],
-            'label' => false,
-            'allow_add' => true,
-            'allow_delete' => true,
-        ])
-    ;
+                'entry_type' => TeamType::class,
+                'entry_options' => ['label' => true],
+                'label' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

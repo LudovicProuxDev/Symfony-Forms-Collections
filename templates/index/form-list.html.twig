@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ company.label }}
+	{{ title }}
 {% endblock %}
 
 {% block body %}
@@ -19,11 +19,10 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>{{ company.label }}</h1>
-		<a href="{{ path('app_companies') }}" class="btn btn-light" role="button">Back</a>
-		{{ include('index/_formcompany.html.twig') }}
+		<h1>{{ title }}</h1>
+		{{ include('index/_formteamcompany-list.html.twig') }}
+		<a href="{{ path('app_index') }}" class="btn btn-light" role="button">Back</a>
 	</div>
-
 	<script>
 		document.querySelectorAll('.add_item_link').forEach(btn => {
 btn.addEventListener("click", addFormToCollection)
@@ -32,7 +31,10 @@ btn.addEventListener("click", addFormToCollection)
 function addFormToCollection(e) {
 const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-const item = document.createElement('tr');
+console.log(collectionHolder.dataset.prototype);
+
+const item = document.createElement('li');
+
 item.innerHTML = collectionHolder.dataset.prototype.replace(/__name__/g, collectionHolder.dataset.index);
 
 collectionHolder.appendChild(item);
@@ -44,18 +46,16 @@ addTeamFormDeleteLink(item);
 };
 
 function addTeamFormDeleteLink(item) {
-const tdButton = document.createElement('td');
 const removeFormButton = document.createElement('button');
 removeFormButton.innerText = 'Delete this team';
 removeFormButton.classList.add('btn');
 removeFormButton.classList.add('btn-danger');
 
-tdButton.append(removeFormButton);
-item.append(tdButton);
+item.append(removeFormButton);
 
 removeFormButton.addEventListener('click', (e) => {
 e.preventDefault();
-// remove the tr for the team form
+// remove the li for the tag form
 item.remove();
 });
 }

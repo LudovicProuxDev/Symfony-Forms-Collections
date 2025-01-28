@@ -2,31 +2,28 @@
 {% form_theme form 'form_table_layout.html.twig' %}
 
 {{ form_start(form) }}
-    {# {{ form(form) }} #}
-    {{ form_row(form.label) }}
-    <button type="button" class="add_item_link" data-collection-holder-class="teams">Add a team</button>
-    
-    {# the data-index attribute is required for the JavaScript code below #}
-    <table>
-        <thead>
-            <tr>
-                <th>Label</th>
-                <th></th>
-                <th>Max. members</th>
-                <th></th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody class="teams"
-        data-index="{{ form.teams|length > 0 ? form.teams|last.vars.name + 1 : 0 }}"
-        data-prototype="{{ form_widget(form.teams.vars.prototype)|e('html_attr') }}">
-        </tbody>
-    </table>
+{# {{ form(form) }} #}
+{{ form_row(form.label) }}
+<button type="button" class="btn btn-primary add_item_link" data-collection-holder-class="teams">Add a team</button>
+
+{# the data-index attribute is required for the JavaScript code below #}
+<table>
+	<thead>
+		<tr>
+			<th>Label</th>
+			<th></th>
+			<th>Max. members</th>
+			<th></th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody class="teams" data-index="{{ form.teams|length > 0 ? form.teams|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.teams.vars.prototype)|e('html_attr') }}"></tbody>
+</table>
 
 
-    <div class="form-error">
-        {{ form_errors(form) }}
-    </div>
+<div class="form-error">
+	{{ form_errors(form) }}
+</div>
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn btn-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
